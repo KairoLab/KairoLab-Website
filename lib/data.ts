@@ -65,10 +65,10 @@ export const teamMembers: TeamMember[] = [
     id: 'juliana-nadruz',
     name: 'Juliana Nadruz',
     username: 'Nadruz',
-    role: 'Developer',
+    role: 'Data Scientist & Full Stack Developer',
     avatar: 'https://github.com/Nadruz.png',
-    bio: 'Developer contributing to collaborative product development and implementation for KairoLab initiatives.',
-    specialties: ['Collaboration', 'Frontend', 'Product Support'],
+    bio: 'Data scientist and developer contributing to backend and frontend development, combining data analysis, implementation and product collaboration across KairoLab initiatives.',
+    specialties: ['Data Science', 'Backend', 'Frontend'],
     socialLinks: {
       github: 'https://github.com/Nadruz',
     },
@@ -76,7 +76,7 @@ export const teamMembers: TeamMember[] = [
   },
   {
     id: 'star-alice',
-    name: 'Star',
+    name: 'Alice Sofia',
     username: 'star-alice',
     role: 'Developer',
     avatar: 'https://github.com/star-alice.png',
@@ -91,7 +91,7 @@ export const teamMembers: TeamMember[] = [
   },
   {
     id: 'igao',
-    name: 'Igão',
+    name: 'Igor de Araujo Cunha C.',
     username: 'igoraraujocunha',
     role: 'Developer',
     avatar: 'https://github.com/igoraraujocunha.png',
@@ -130,7 +130,7 @@ export const teamMembers: TeamMember[] = [
   },
   {
     id: 'rafael-sartorio',
-    name: 'Rafael Sartorio',
+    name: 'Rafael Sartório',
     username: 'RafaelSartorio',
     role: 'Developer',
     avatar: 'https://github.com/RafaelSartorio.png',
@@ -138,6 +138,32 @@ export const teamMembers: TeamMember[] = [
     specialties: ['Development', 'Team Delivery'],
     socialLinks: {
       github: 'https://github.com/RafaelSartorio',
+    },
+    projectIds: ['vavahelper'],
+  },
+  {
+    id: 'luninha',
+    name: 'Luna França',
+    username: 'luninha4',
+    role: 'Design & Marketing',
+    avatar: 'https://github.com/luninha4.png',
+    bio: 'Design and marketing member at KairoLab, contributing to visual identity, communication, content and brand positioning across the project ecosystem.',
+    specialties: ['Design', 'Marketing', 'Branding'],
+    socialLinks: {
+      github: 'https://github.com/luninha4',
+    },
+    projectIds: ['vavahelper'],
+  },
+  {
+    id: 'rafael-gomes',
+    name: 'Rafael Gomes de Almeida',
+    username: 'rRafaelGomes',
+    role: 'Data Scientist',
+    avatar: 'https://github.com/rRafaelGomes.png',
+    bio: 'Data scientist collaborating on KairoLab projects, supporting data analysis, insights and technical decision-making for product development.',
+    specialties: ['Data Science', 'Data Analysis', 'Insights'],
+    socialLinks: {
+      github: 'https://github.com/rRafaelGomes',
     },
     projectIds: ['vavahelper'],
   },
@@ -205,7 +231,7 @@ export const projects: Project[] = [
       { category: 'Database & auth', items: ['PostgreSQL', 'JWT'] },
       { category: 'Build & dependencies', items: ['Maven'] },
     ],
-    teamMemberIds: ['andre-felipe', 'juliana-nadruz', 'gabriel-alves', 'igao', 'rafael-sartorio', 'star-alice'],
+    teamMemberIds: ['andre-felipe', 'juliana-nadruz', 'gabriel-alves', 'igao', 'rafael-sartorio', 'luninha', 'rafael-gomes', 'star-alice'],
     status: 'active',
   },
 ]
