@@ -318,11 +318,17 @@ export default function TeamClient() {
                         }}
                         className="flex items-center gap-3 rounded-lg border border-border/50 bg-background/50 p-3 text-left transition-all hover:border-gold/50"
                       >
-                        <div className="relative h-12 w-12 overflow-hidden rounded-lg border border-border/50 bg-white/5 p-1.5">
-                          <Image src={project.logo} alt={project.name} fill className="object-contain" />
+                        <div className="relative h-14 w-20 shrink-0 overflow-hidden rounded-lg border border-border/50 bg-white/5 p-2">
+                          <Image
+                            src={project.logo}
+                            alt={`${project.name} logo`}
+                            fill
+                            sizes="80px"
+                            className="object-contain"
+                          />
                         </div>
-                        <div>
-                          <p className="text-sm font-medium text-foreground">{project.name}</p>
+                        <div className="min-w-0 flex-1">
+                          <p className="truncate text-sm font-medium text-foreground">{project.name}</p>
                           <p className="line-clamp-1 text-xs text-muted-foreground">
                             {project.description}
                           </p>
