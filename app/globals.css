@@ -139,3 +139,26 @@
     scroll-behavior: smooth;
   }
 }
+
+/* Clickable elements */
+a,
+button,
+[role="button"],
+[role="link"],
+[role="menuitem"],
+[role="menuitemcheckbox"],
+[role="option"],
+[role="tab"],
+[aria-haspopup="menu"],
+[data-slot="button"],
+[data-radix-collection-item],
+.cursor-clickable {
+  cursor: pointer;
+}
+
+button:disabled,
+[aria-disabled="true"],
+[data-disabled],
+.disabled {
+  cursor: not-allowed;
+}
