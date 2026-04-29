@@ -46,6 +46,7 @@ export const teamMembers: TeamMember[] = [
     specialties: ['Full Stack', 'Product Development', 'Architecture'],
     socialLinks: {
       github: 'https://github.com/andrefelipebarros',
+      linkedin: 'https://www.linkedin.com/in/andrefelipebarros/',
     },
     projectIds: ['animes-cegal', 'fynco', 'less', 'vavahelper'],
   },
