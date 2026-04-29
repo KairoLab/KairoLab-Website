@@ -119,9 +119,10 @@ export const teamMembers: TeamMember[] = [
     pronouns: 'he/him',
     avatar: 'https://github.com/matheus-rmds.png',
     bio: 'Developer participating in the LESS project and supporting its digital presence and implementation.',
-    specialties: ['Web Development', 'Product Support'],
+    specialties: ['Fullstack Development', 'Maintenance Engineer', 'Product Support'],
     socialLinks: {
       github: 'https://github.com/matheus-rmds',
+      linkedin: 'https://www.linkedin.com/in/matheus-rocha-martins-de-souza/',
     },
     projectIds: ['less'],
   },
