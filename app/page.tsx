@@ -1,10 +1,18 @@
 'use client'
 
+import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowRight, Building2 } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { ArrowLeft, ArrowRight, Building2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  type CarouselApi,
+} from '@/components/ui/carousel'
 import { Navigation } from '@/components/navigation'
 import { HeroSection } from '@/components/hero-section'
 import { InDevelopmentSection } from '@/components/in-development-section'
@@ -12,8 +20,48 @@ import { Footer } from '@/components/footer'
 import { projects, teamMembers } from '@/lib/data'
 
 export default function Home() {
+  const router = useRouter()
   // Calculate partnership count dynamically
   const partnershipCount = projects.filter((p) => p.partnership).length
+  const [teamCarouselApi, setTeamCarouselApi] = useState<CarouselApi>()
+  const [canScrollPrev, setCanScrollPrev] = useState(false)
+  const [canScrollNext, setCanScrollNext] = useState(false)
+
+  const updateTeamCarouselControls = useCallback((api: CarouselApi) => {
+    if (!api) return
+
+    setCanScrollPrev(api.canScrollPrev())
+    setCanScrollNext(api.canScrollNext())
+  }, [])
+
+  useEffect(() => {
+    if (!teamCarouselApi) return
+
+    updateTeamCarouselControls(teamCarouselApi)
+    teamCarouselApi.on('select', updateTeamCarouselControls)
+    teamCarouselApi.on('reInit', updateTeamCarouselControls)
+
+    return () => {
+      teamCarouselApi.off('select', updateTeamCarouselControls)
+      teamCarouselApi.off('reInit', updateTeamCarouselControls)
+    }
+  }, [teamCarouselApi, updateTeamCarouselControls])
+
+  const handlePreviousTeamSlide = () => {
+    teamCarouselApi?.scrollPrev()
+  }
+
+  const handleNextTeamSlide = () => {
+    if (!teamCarouselApi) return
+
+    if (teamCarouselApi.canScrollNext()) {
+      teamCarouselApi.scrollNext()
+      return
+    }
+
+    router.push('/team')
+  }
+
   return (
     <main className="min-h-screen bg-background">
       <Navigation />
@@ -97,7 +145,7 @@ export default function Home() {
                 Our <span className="text-gold">Team</span>
               </h2>
               <p className="mt-2 text-muted-foreground">
-                The talented people behind our innovative solutions
+                Use the arrows to preview everyone before opening the full team page
               </p>
             </div>
             <Link href="/team">
@@ -108,32 +156,72 @@ export default function Home() {
             </Link>
           </div>
 
-          {/* Team Grid Preview */}
-          <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-            {teamMembers.slice(0, 5).map((member) => (
-              <Link
-                key={member.id}
-                href={`/team?member=${member.id}`}
-                className="group flex flex-col items-center overflow-hidden rounded-xl border border-border/50 bg-card p-6 text-center transition-all duration-300 hover:border-gold/50 hover:shadow-lg hover:shadow-gold/5"
-              >
-                {/* Avatar */}
-                <div className="relative mb-4 h-16 w-16 overflow-hidden rounded-full border border-border/50 bg-muted">
-                  <Image
-                    src={member.avatar}
-                    alt={`Foto de ${member.name}`}
-                    fill
-                    sizes="64px"
-                    className="object-cover"
-                  />
-                </div>
+          {/* Team Carousel Preview */}
+          <div className="relative px-10">
+            <Carousel
+              setApi={setTeamCarouselApi}
+              opts={{ align: 'start', loop: false }}
+              className="w-full"
+            >
+              <CarouselContent>
+                {teamMembers.map((member) => (
+                  <CarouselItem
+                    key={member.id}
+                    className="basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/5"
+                  >
+                    <Link
+                      href={`/team?member=${member.id}`}
+                      className="group flex h-full min-h-[210px] flex-col items-center overflow-hidden rounded-xl border border-border/50 bg-card p-6 text-center transition-all duration-300 hover:border-gold/50 hover:shadow-lg hover:shadow-gold/5"
+                    >
+                      {/* Avatar */}
+                      <div className="relative mb-4 h-16 w-16 overflow-hidden rounded-full border border-border/50 bg-muted">
+                        <Image
+                          src={member.avatar}
+                          alt={`Foto de ${member.name}`}
+                          fill
+                          sizes="64px"
+                          className="object-cover"
+                        />
+                      </div>
 
-                {/* Content */}
-                <h3 className="mb-1 text-base font-semibold text-foreground transition-colors group-hover:text-gold">
-                  {member.name}
-                </h3>
-                <p className="text-xs text-gold/80">{member.role}</p>
-              </Link>
-            ))}
+                      {/* Content */}
+                      <h3 className="mb-1 line-clamp-2 text-base font-semibold text-foreground transition-colors group-hover:text-gold">
+                        {member.name}
+                      </h3>
+                      <p className="mb-2 text-xs text-muted-foreground">@{member.username}</p>
+                      <p className="mt-auto text-xs text-gold/80">{member.role}</p>
+                    </Link>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
+
+            <Button
+              type="button"
+              variant="outline"
+              size="icon"
+              onClick={handlePreviousTeamSlide}
+              disabled={!canScrollPrev}
+              className="absolute left-0 top-1/2 z-10 h-10 w-10 -translate-y-1/2 rounded-full border-gold/40 bg-background/80 text-gold backdrop-blur transition-all hover:bg-gold/10 disabled:border-border/40 disabled:text-muted-foreground"
+              aria-label="Show previous members"
+            >
+              <ArrowLeft className="h-4 w-4" />
+            </Button>
+
+            <Button
+              type="button"
+              variant="outline"
+              size="icon"
+              onClick={handleNextTeamSlide}
+              className={`absolute right-0 top-1/2 z-10 h-10 w-10 -translate-y-1/2 rounded-full backdrop-blur transition-all ${
+                canScrollNext
+                  ? 'border-gold/40 bg-background/80 text-gold hover:bg-gold/10'
+                  : 'border-gold bg-gold/10 text-gold shadow-lg shadow-gold/10 hover:bg-gold/20'
+              }`}
+              aria-label={canScrollNext ? 'Show next members' : 'View all members'}
+            >
+              <ArrowRight className="h-4 w-4" />
+            </Button>
           </div>
         </div>
       </section>
